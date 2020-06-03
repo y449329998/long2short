@@ -39,7 +39,7 @@ define('CONF', $config);
 http://localhost/?url=http://www.baidu.com
 ```
 
-####5.2 得到数据
+#### 5.2 得到数据
 ```
 {
     "error": 0,   //0,成功,1失败,2 缺少url参数
