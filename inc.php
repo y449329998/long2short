@@ -1,6 +1,6 @@
 <?php
 $config=[
-    //书籍数据库
+    //数据库
     'db'=>[
         'database_type' => 'mysql', //数据库类型mysql
         'database_name' => 'shorturl',//数据库名
