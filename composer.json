@@ -1,0 +1,16 @@
+{
+    "name": "administrator/long2short",
+    "description": "\\",
+    "authors": [
+        {
+            "name": "muyi99",
+            "email": "449329998@qq.com"
+        }
+    ],
+    "require": {
+        "catfan/medoo": "^1.7",
+        "ext-curl": "*",
+        "ext-mbstring": "*",
+        "ext-json": "*",
+    }
+}
