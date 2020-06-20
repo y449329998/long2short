@@ -9,15 +9,15 @@ $longUrl = $_GET['url'];
 //$longUrl = 'http://m.789aread.com?hhs=huuiuii';
 if ($longUrl) {
     $shortUrl = getShortUrl($longUrl);
-    if ($shortUrl) {
+    if ($shortUrl['res']) {
         $data = [
             'error' => 0,
-            'short_url' => $shortUrl
+            'short_url' => $shortUrl['short_url'],
         ];
     } else {
         $data = [
             'error' => 1,
-            'msg' => '生产短链失败!'
+            'msg' => '生产短链失败!'.$shortUrl['errmsg']
         ];
     }
     jsonReturn($data);

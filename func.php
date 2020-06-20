@@ -13,7 +13,11 @@ function getShortUrl($longUrl)
     $db = new Medoo(CONF['db']);
     $url = $db->get('url', '*', ['url' => $longUrl]);
     if ($url) {
-        return $url['short'];
+        $returnData = array(
+            'res' => true,
+            "short_url" => $url['short']
+        );
+        return $returnData;
     } else {
         $short = '';
         $i = 0;
@@ -23,16 +27,26 @@ function getShortUrl($longUrl)
             if ($i > 3) break;
         }
 
-        if ($short) {
+        if ($short['res']) {
             $data = [
                 'url' => $longUrl,
-                'short' => $short,
+                'short' => $short["short_url"],
                 'createtime' => time()
             ];
             $db->insert('url', $data);
-            return $short;
+
+            $returnData = array(
+                'res' => true,
+                "short_url" => $short["short_url"],
+            );
+            return $returnData;
+
         } else {
-            return 'error';
+            $returnData = array(
+                'res' => false,
+                "errmsg" => $short["errmsg"],
+            );
+            return $returnData;
         }
     }
 
@@ -41,7 +55,7 @@ function getShortUrl($longUrl)
 
 function getToken()
 {
-    $file = __DIR__.DIRECTORY_SEPARATOR.'token.json';
+    $file = __DIR__ . DIRECTORY_SEPARATOR . 'token.json';
     $data = file_get_contents($file);
     $data = json_decode($data, true);
     if ($data && (time() - $data['update']) < 600) {
@@ -82,14 +96,15 @@ function long2short($long_url)
     //                ["short_url"] => string(26) "https://w.url.cn/s/AluV6Vh"
     //        }
 
+    // var_dump($res);exit;
     if ($res['errcode'] == 0 && $res['errmsg'] == 'ok') {
-
-        return $res['short_url'];
-
+        $res['res'] = true;
     } else {
-
-        return false;
+        $res['res'] = false;
     }
+
+    return $res;
+
 }
 
 function request($curl, $https = true, $method = 'get', $data = null, $headers = false)
